@@ -18,9 +18,11 @@ export const BUSINESS = {
 
 export const PHONE_LINK = `tel:+${BUSINESS.phoneNumber}`
 
+// Internal links (handled by the router). "#contact" is the footer, present on every page.
 export const NAV_LINKS = [
-  { href: '#categories', label: 'Categories' },
-  { href: '#sweets', label: 'Our Sweets' },
-  { href: '#bulk-orders', label: 'Bulk Orders' },
-  { href: '#contact', label: 'Contact' },
+  { to: '/sweets/cheena-sweets', label: 'Cheena' },
+  { to: '/sweets/desi-ghee-sweets', label: 'Desi Ghee' },
+  { to: '/sweets/kaju-sweets', label: 'Kaju' },
+  { to: '/#bulk-orders', label: 'How to Order' },
+  { to: '#contact', label: 'Contact' },
 ]

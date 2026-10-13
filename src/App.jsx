@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Header from './components/Header.jsx'
-import Hero from './components/Hero.jsx'
-import Categories from './components/Categories.jsx'
-import Catalogue from './components/Catalogue.jsx'
-import BulkOrders from './components/BulkOrders.jsx'
 import Footer from './components/Footer.jsx'
 import CartDrawer from './components/CartDrawer.jsx'
 import MobileContactBar from './components/MobileContactBar.jsx'
-import { PRODUCTS_BY_ID } from './data/products.js'
+import { CATEGORIES, categoryPath, PRODUCTS_BY_ID } from './data/products.js'
+import { useRouter } from './router.jsx'
+import HomePage from './pages/HomePage.jsx'
+import CategoryPage from './pages/CategoryPage.jsx'
+import NotFoundPage from './pages/NotFoundPage.jsx'
 import { formatKg, MAX_KG, parseQuantity } from './utils/order.js'
 
 const STORAGE_KEY = 'cb-bulk-order'
@@ -22,6 +22,7 @@ function loadCart() {
 }
 
 export default function App() {
+  const { path } = useRouter()
   const [cart, setCart] = useState(loadCart)
   const [cartOpen, setCartOpen] = useState(false)
   const [toast, setToast] = useState(null)
@@ -64,16 +65,28 @@ export default function App() {
   const cartCount = Object.keys(cart).length
   const openCart = () => setCartOpen(true)
 
+  function renderPage() {
+    if (path === '/') return <HomePage cartCount={cartCount} onOpenCart={openCart} />
+    const category = CATEGORIES.find((c) => categoryPath(c.id) === path)
+    if (category)
+      return (
+        <CategoryPage
+          key={category.id}
+          category={category}
+          onAddToOrder={addToOrder}
+          notify={notify}
+          cartCount={cartCount}
+          onOpenCart={openCart}
+        />
+      )
+    return <NotFoundPage />
+  }
+
   return (
     <>
-      <a className="skip-link" href="#sweets">Skip to sweets</a>
+      <a className="skip-link" href="#main">Skip to content</a>
       <Header cartCount={cartCount} onOpenCart={openCart} />
-      <main id="top">
-        <Hero />
-        <Categories />
-        <Catalogue onAddToOrder={addToOrder} notify={notify} />
-        <BulkOrders cartCount={cartCount} onOpenCart={openCart} />
-      </main>
+      <main id="main">{renderPage()}</main>
       <Footer />
       <MobileContactBar cartCount={cartCount} onOpenCart={openCart} />
       <CartDrawer

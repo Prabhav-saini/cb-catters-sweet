@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ShoppingBag, Trash2, X } from 'lucide-react'
 import { PRODUCTS_BY_ID } from '../data/products.js'
+import { Link } from '../router.jsx'
 import { buildCartMessage, buildWhatsAppUrl, copyText, formatINR, parseQuantity, subtotal } from '../utils/order.js'
 import { WhatsAppIcon } from './Icons.jsx'
 import QuantityInput from './QuantityInput.jsx'
@@ -62,7 +63,7 @@ export default function CartDrawer({ open, onClose, cart, setQuantity, remove, c
             <ShoppingBag size={40} aria-hidden="true" />
             <p>No sweets added yet.</p>
             <p className="muted">Use “Add to Bulk Order” on any sweet to build a combined enquiry.</p>
-            <a className="btn btn--primary" href="#sweets" onClick={onClose}>Browse Sweets</a>
+            <Link className="btn btn--primary" to="/#categories" onClick={onClose}>Browse Sweets</Link>
           </div>
         ) : (
           <>

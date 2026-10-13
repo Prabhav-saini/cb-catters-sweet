@@ -1,5 +1,6 @@
 import { ClipboardList, MessageCircle, PhoneCall, ShoppingBag } from 'lucide-react'
 import { BUSINESS, PHONE_LINK } from '../config/business.js'
+import SectionHead from './SectionHead.jsx'
 
 const STEPS = [
   {
@@ -23,10 +24,7 @@ export default function BulkOrders({ cartCount, onOpenCart }) {
   return (
     <section id="bulk-orders" className="section bulk" aria-labelledby="bulk-title">
       <div className="container">
-        <header className="section-head">
-          <p className="eyebrow">{BUSINESS.bulkNotice}</p>
-          <h2 id="bulk-title">How Bulk Ordering Works</h2>
-        </header>
+        <SectionHead id="bulk-title" script="Simple as one, two, three" title="How Bulk Ordering Works" sub={BUSINESS.bulkNotice} />
 
         <ol className="steps">
           {STEPS.map(({ icon: Icon, title, text }, i) => (

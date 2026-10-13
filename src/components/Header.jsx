@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Menu, Phone, ShoppingBag, X } from 'lucide-react'
 import { BUSINESS, NAV_LINKS, PHONE_LINK } from '../config/business.js'
+import { Link, useRouter } from '../router.jsx'
 import { buildWhatsAppUrl, GENERAL_MESSAGE } from '../utils/order.js'
 import { WhatsAppIcon } from './Icons.jsx'
 
 export default function Header({ cartCount, onOpenCart }) {
   const [open, setOpen] = useState(false)
+  const { path } = useRouter()
+  const isCurrent = (to) => (to === path ? 'page' : undefined)
 
   useEffect(() => {
     if (!open) return
@@ -18,16 +21,16 @@ export default function Header({ cartCount, onOpenCart }) {
     <header className="site-header">
       <div className="notice-strip">{BUSINESS.bulkNotice}</div>
       <div className="container site-header__bar">
-        <a href="#top" className="brand" aria-label={`${BUSINESS.name} — back to top`}>
+        <Link to="/" className="brand" aria-label={`${BUSINESS.name} — home`}>
           <span className="brand__mark" aria-hidden="true">CB</span>
           <span className="brand__name">
             CB Catters <span className="brand__amp">&amp;</span> Sweet
           </span>
-        </a>
+        </Link>
 
         <nav className="site-nav" aria-label="Main">
           {NAV_LINKS.map((l) => (
-            <a key={l.href} href={l.href}>{l.label}</a>
+            <Link key={l.to} to={l.to} aria-current={isCurrent(l.to)}>{l.label}</Link>
           ))}
         </nav>
 
@@ -57,8 +60,11 @@ export default function Header({ cartCount, onOpenCart }) {
 
       <div id="mobile-menu" className={`mobile-menu ${open ? 'is-open' : ''}`} hidden={!open}>
         <nav aria-label="Mobile">
+          <Link to="/" aria-current={isCurrent('/')} onClick={() => setOpen(false)}>Home</Link>
           {NAV_LINKS.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}</a>
+            <Link key={l.to} to={l.to} aria-current={isCurrent(l.to)} onClick={() => setOpen(false)}>
+              {l.to.startsWith('/sweets/') ? `${l.label} Sweets` : l.label}
+            </Link>
           ))}
         </nav>
         <div className="mobile-menu__cta">

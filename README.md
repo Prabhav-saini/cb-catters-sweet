@@ -1,6 +1,13 @@
 # CB Catters & Sweet — Wholesale Sweets Website
 
-A single-page static catalogue for **CB Catters & Sweet**: 3 categories, 30 sweets, quantity selection, and order enquiries over WhatsApp. It has no backend, no database and no paid services.
+A static website for **CB Catters & Sweet**: a home page showcasing 3 categories, one page per category with its 10 sweets, quantity selection, and order enquiries over WhatsApp. It has no backend, no database and no paid services.
+
+| Page | URL |
+|---|---|
+| Home: hero, category showcase, highlights, how to order, FAQ | `/` |
+| Cheena Sweets | `/sweets/cheena-sweets` |
+| Desi Ghee Sweets | `/sweets/desi-ghee-sweets` |
+| Kaju Sweets | `/sweets/kaju-sweets` |
 
 **WHOLESALE & BULK ORDERS ONLY**
 
@@ -32,7 +39,7 @@ npm run build      # outputs static files to dist/
 npm run preview    # serves dist/ at http://localhost:4173 to check it
 ```
 
-`dist/` is a plain static site. Because `vite.config.js` uses `base: './'`, it works from any domain or sub-folder.
+`dist/` is a plain static site. Category pages use clean URLs, so the host must serve `index.html` for every path. That is already configured for Vercel (`vercel.json`) and Netlify (`public/_redirects`). Deploy at the root of a domain, not in a sub-folder.
 
 ## Free hosting
 
@@ -43,13 +50,11 @@ npm run preview    # serves dist/ at http://localhost:4173 to check it
 
 To deploy automatically from GitHub instead, choose *Add new site → Import an existing project*. `netlify.toml` already sets the build command (`npm run build`) and the publish folder (`dist`).
 
-### Option B: GitHub Pages
-1. Push this folder to a GitHub repository on the `main` branch.
-2. In the repo, go to **Settings → Pages → Build and deployment → Source** and select **GitHub Actions**.
-3. The included workflow (`.github/workflows/deploy.yml`) builds and publishes on every push. The site appears at `https://<username>.github.io/<repo>/`.
+### Option B: Vercel (recommended with your own domain)
+1. Import the repo at <https://vercel.com/new>. It detects Vite automatically (build: `npm run build`, output: `dist`). Every push to `main` redeploys.
+2. To use your own domain, go to **Project → Settings → Domains** and add it. Then, in your domain registrar's DNS settings (e.g. GoDaddy), set the records Vercel shows. Usually that's an `A` record for `@` → `76.76.21.21` and a `CNAME` for `www` → `cname.vercel-dns.com`.
 
-### Option C: Vercel
-Import the repo at <https://vercel.com/new>. It detects Vite automatically (build: `npm run build`, output: `dist`).
+GitHub Pages project sites (`username.github.io/repo/`) are not supported, because the clean URLs need the site at a domain root.
 
 > Click-to-copy needs HTTPS. All three hosts above serve HTTPS by default.
 
@@ -62,6 +67,8 @@ Import the repo at <https://vercel.com/new>. It detects Vite automatically (buil
 | Business name, tagline, phone or WhatsApp number | `src/config/business.js` |
 | A category price (updates every sweet in it) | `src/data/products.js` → `CATEGORIES` → `pricePerKg` |
 | Sweet names or descriptions, or adding a sweet | `src/data/products.js` → `ITEMS` |
+| Category description shown on the home and category pages | `src/data/products.js` → `CATEGORIES` → `description` |
+| FAQ answers | `src/components/Faq.jsx` |
 | A product photo | Replace `public/images/products/<PRODUCT-ID>.webp` |
 | Colours and fonts | Top of `src/index.css` (`:root`) |
 
@@ -126,22 +133,26 @@ cb-catters-sweet/
 │       ├── products/CB-XX-NNN.webp   # 30 product photos (800×600)
 │       ├── site/                     # hero + 3 category photos
 │       └── fallback.svg              # shown if a photo fails
+├── vercel.json                 # serve index.html for every route (Vercel)
+├── public/_redirects           # same, for Netlify
 ├── src/
+│   ├── router.jsx              # tiny client-side router (Link, useRouter)
+│   ├── pages/                  # HomePage, CategoryPage, NotFoundPage
+│   ├── usePageMeta.js          # per-page <title> and meta description
 │   ├── config/business.js      # name, numbers, nav links
 │   ├── data/products.js        # categories, prices, 30 products
 │   ├── data/imageCredits.js    # attribution list shown in the footer
 │   ├── utils/order.js          # validation, ₹ formatting, WhatsApp messages/URL, clipboard
 │   ├── utils/asset.js          # path helper for /public files
-│   ├── components/             # Header, Hero, Categories, Catalogue, ProductCard,
-│   │                           # QuantityInput, BulkOrders, CartDrawer, Footer,
-│   │                           # MobileContactBar, SmartImage, Icons
+│   ├── components/             # Header, Hero, Categories (showcase), Highlights,
+│   │                           # ProductCard, QuantityInput, BulkOrders, Faq,
+│   │                           # CartDrawer, Footer, MobileContactBar, SectionHead…
 │   ├── App.jsx                 # page layout, bulk-order list state, toasts
 │   └── index.css               # all styles (design tokens at the top)
 ├── scripts/generate-catalogue.mjs
 ├── PRODUCT_CATALOGUE.md        # generated, all 30 products
 ├── IMAGE_CREDITS.md            # photo sources, licences, stand-in notes
-├── netlify.toml
-└── .github/workflows/deploy.yml
+└── netlify.toml
 ```
 
 Stack: React 19, Vite, plain CSS, and lucide-react icons. Fonts (Fraunces, Mukta) load from Google Fonts.

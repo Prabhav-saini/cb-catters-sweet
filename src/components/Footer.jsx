@@ -1,6 +1,7 @@
 import { Phone } from 'lucide-react'
 import { BUSINESS, NAV_LINKS, PHONE_LINK } from '../config/business.js'
 import { IMAGE_CREDITS } from '../data/imageCredits.js'
+import { Link } from '../router.jsx'
 import { buildWhatsAppUrl, GENERAL_MESSAGE } from '../utils/order.js'
 import { WhatsAppIcon } from './Icons.jsx'
 
@@ -8,7 +9,7 @@ const YEAR = new Date().getFullYear()
 
 export default function Footer() {
   return (
-    <footer id="contact" className="site-footer">
+    <footer id="contact" className="site-footer scallop-t">
       <div className="container footer-grid">
         <div>
           <p className="footer-brand">{BUSINESS.name}</p>
@@ -35,9 +36,11 @@ export default function Footer() {
         <nav aria-label="Footer">
           <h2 className="footer-heading">Quick Links</h2>
           <ul className="footer-links">
-            {NAV_LINKS.map((l) => (
-              <li key={l.href}><a href={l.href}>{l.label}</a></li>
+            <li><Link to="/">Home</Link></li>
+            {NAV_LINKS.filter((l) => l.to !== '#contact').map((l) => (
+              <li key={l.to}><Link to={l.to}>{l.to.startsWith('/sweets/') ? `${l.label} Sweets` : l.label}</Link></li>
             ))}
+            <li><Link to="/#faq">FAQ</Link></li>
           </ul>
         </nav>
       </div>

@@ -1,9 +1,9 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
-// base: './' makes the build work from any folder or sub-path
-// (GitHub Pages project sites, Netlify, Vercel, or plain file hosting).
+// Clean URLs (/sweets/kaju-sweets) need absolute asset paths and a host that
+// serves index.html for every route — see vercel.json and public/_redirects.
 export default defineConfig({
   plugins: [react()],
-  base: './',
+  base: '/',
 })

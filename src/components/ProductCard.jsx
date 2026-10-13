@@ -37,7 +37,9 @@ export default function ProductCard({ product, onAddToOrder, notify }) {
   return (
     <article className="product-card" aria-labelledby={`${product.id}-name`}>
       <div className="product-card__media">
-        <SmartImage src={product.image} alt={`${product.name} (illustrative photo)`} />
+        <div className="arch arch--card">
+          <SmartImage src={product.image} alt={`${product.name} (illustrative photo)`} />
+        </div>
         <span className="product-card__code">{product.id}</span>
       </div>
 
@@ -82,7 +84,7 @@ export default function ProductCard({ product, onAddToOrder, notify }) {
           >
             <WhatsAppIcon size={18} /> Order on WhatsApp
           </a>
-          <button type="button" className="btn btn--ghost" onClick={handleAdd} aria-label={`Add ${product.name} to bulk order list`}>
+          <button type="button" className="btn btn--gold" onClick={handleAdd} aria-label={`Add ${product.name} to bulk order list`}>
             <ShoppingBag size={17} aria-hidden="true" /> Add to Bulk Order
           </button>
         </div>

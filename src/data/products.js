@@ -19,6 +19,9 @@ export const CATEGORIES = [
     pricePerKg: 300,
     image: 'images/site/cat-cheena.webp',
     blurb: 'Soft, syrupy classics made from fresh chhena.',
+    script: 'Soft, syrupy & fresh',
+    description:
+      'Classic chhena sweets from the Bengal and Odisha tradition: spongy Rasgulla, creamy Ras Malai, baked Chhena Poda, Rajbhog and more. Every sweet in this range is one wholesale rate per kilogram.',
   },
   {
     id: 'desi-ghee-sweets',
@@ -27,6 +30,9 @@ export const CATEGORIES = [
     pricePerKg: 500,
     image: 'images/site/cat-desi-ghee.webp',
     blurb: 'Rich festive favourites for celebrations and functions.',
+    script: 'Rich & festive',
+    description:
+      'A festive range of traditional favourites: Chhena Jhili, Kacha Golla, Raskadam, Malai Chaap, Sarpuria and more. Rich, celebratory sweets for functions and festivals, all at one wholesale rate per kilogram.',
   },
   {
     id: 'kaju-sweets',
@@ -35,6 +41,9 @@ export const CATEGORIES = [
     pricePerKg: 800,
     image: 'images/site/cat-kaju.webp',
     blurb: 'Premium cashew sweets — katlis, rolls and more.',
+    script: 'Premium cashew classics',
+    description:
+      'Cashew sweets for gifting and special occasions: Kaju Katli, Kaju Kesar Katli, Kaju Rolls with pista, anjeer, rose or dry-fruit, Kaju Paan and Kaju Apple. All at one wholesale rate per kilogram.',
   },
 ]
 
@@ -91,6 +100,8 @@ export const PRODUCTS = CATEGORIES.flatMap((cat) =>
 )
 
 export const PRODUCTS_BY_ID = Object.fromEntries(PRODUCTS.map((p) => [p.id, p]))
+
+export const categoryPath = (categoryId) => `/sweets/${categoryId}`
 
 export const productsInCategory = (categoryId) =>
   PRODUCTS.filter((p) => p.categoryId === categoryId)

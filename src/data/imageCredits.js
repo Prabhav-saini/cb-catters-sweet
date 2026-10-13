@@ -84,83 +84,83 @@ export const IMAGE_CREDITS = [
   },
   {
     "asset": "CB-DG-001",
-    "title": "Chhena Jhili.JPG",
-    "source": "https://commons.wikimedia.org/wiki/File:Chhena_Jhili.JPG",
-    "author": "Jit.roy.chowdhury",
+    "title": "Boondi Laddoo.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Boondi_Laddoo.jpg",
+    "author": "Abhishek Anshuwali",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
   {
     "asset": "CB-DG-002",
-    "title": "Natore er KachaGolla1 (One Kind of Sweet).JPG",
-    "source": "https://commons.wikimedia.org/wiki/File:Natore_er_KachaGolla1_(One_Kind_of_Sweet).JPG",
-    "author": "Wikimedia Commons contributor",
-    "license": "Public domain",
-    "licenseUrl": null
+    "title": "Soan Papdi - Barrackpore - North 24 Parganas 2015-05-24 1175.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Soan_Papdi_-_Barrackpore_-_North_24_Parganas_2015-05-24_1175.JPG",
+    "author": "Biswarup Ganguly",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
   },
   {
     "asset": "CB-DG-003",
-    "title": "Food-Chhanar-Toast.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Food-Chhanar-Toast.jpg",
-    "author": "Sumit Surai",
-    "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    "title": "Balushahi2.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Balushahi2.jpg",
+    "author": "Kirti Poddar",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
   },
   {
     "asset": "CB-DG-004",
-    "title": "Paan Sandesh - Aahare Bangla 2016.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Paan_Sandesh_-_Aahare_Bangla_2016.jpg",
-    "author": "Schwiki",
+    "title": "Ghee Mysore Pak.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Ghee_Mysore_Pak.jpg",
+    "author": "Vaidehi Pujary",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
   {
     "asset": "CB-DG-005",
-    "title": "রসকদম.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:%E0%A6%B0%E0%A6%B8%E0%A6%95%E0%A6%A6%E0%A6%AE.jpg",
-    "author": "রামিশা তাবাস্সুম",
+    "title": "Besan ke laddoo Indian festivals hero.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Besan_ke_laddoo_Indian_festivals_hero.JPG",
+    "author": "PJ.wikilovesfood",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
   {
     "asset": "CB-DG-006",
-    "title": "Chhena payesh.JPG",
-    "source": "https://commons.wikimedia.org/wiki/File:Chhena_payesh.JPG",
-    "author": "Rupasree",
+    "title": "Moti Laddu - Bangladeshi Sweets from Banoful.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Moti_Laddu_-_Bangladeshi_Sweets_from_Banoful.jpg",
+    "author": "Tanvir Rahman",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
   {
     "asset": "CB-DG-007",
-    "title": "Hari malai chop (10098265016).jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Hari_malai_chop_(10098265016).jpg",
-    "author": "Devika",
-    "license": "CC BY-SA 2.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
-  },
-  {
-    "asset": "CB-DG-008",
-    "title": "Bengali sweets - 02.JPG",
-    "source": "https://commons.wikimedia.org/wiki/File:Bengali_sweets_-_02.JPG",
-    "author": "Dharmadhyaksha",
+    "title": "Khoya Barfi.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Khoya_Barfi.JPG",
+    "author": "Vashisthapathak2015",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
   {
+    "asset": "CB-DG-008",
+    "title": "Kesar Peda.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Kesar_Peda.jpg",
+    "author": "Sameer Goyal",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+  },
+  {
     "asset": "CB-DG-009",
-    "title": "Malpua sweet in Kolkata, India.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Malpua_sweet_in_Kolkata,_India.jpg",
-    "author": "Ravi Dwivedi",
+    "title": "Yummy coconut barfi.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Yummy_coconut_barfi.jpg",
+    "author": "Fatimahope",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
   {
     "asset": "CB-DG-010",
-    "title": "Sarpuria - Krishnanagar - Nadia 2013-03-23 7040.JPG",
-    "source": "https://commons.wikimedia.org/wiki/File:Sarpuria_-_Krishnanagar_-_Nadia_2013-03-23_7040.JPG",
-    "author": "Biswarup Ganguly",
-    "license": "CC BY 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+    "title": "Moong Dal Barfi.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Moong_Dal_Barfi.JPG",
+    "author": "Ravi Talwar",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
   {
     "asset": "CB-KJ-001",
@@ -243,14 +243,6 @@ export const IMAGE_CREDITS = [
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
   {
-    "asset": "hero",
-    "title": "A box full of burfis, Mithai Indian Sweets London November 2009.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:A_box_full_of_burfis,_Mithai_Indian_Sweets_London_November_2009.jpg",
-    "author": "secretlondon123",
-    "license": "CC BY-SA 2.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
-  },
-  {
     "asset": "cat-cheena",
     "title": "Bengali sweets rasgulla.jpg",
     "source": "https://commons.wikimedia.org/wiki/File:Bengali_sweets_rasgulla.jpg",
@@ -260,11 +252,11 @@ export const IMAGE_CREDITS = [
   },
   {
     "asset": "cat-desi-ghee",
-    "title": "Sweets Mithai for Diwali and other Festivals of India.jpg",
-    "source": "https://commons.wikimedia.org/wiki/File:Sweets_Mithai_for_Diwali_and_other_Festivals_of_India.jpg",
-    "author": "Laura",
-    "license": "CC BY-SA 2.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    "title": "Laddu preparation for Punjabi wedding 06.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Laddu_preparation_for_Punjabi_wedding_06.jpg",
+    "author": "Satdeep Gill",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
   },
   {
     "asset": "cat-kaju",
@@ -273,5 +265,13 @@ export const IMAGE_CREDITS = [
     "author": "Unknomics",
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  },
+  {
+    "asset": "hero",
+    "title": "A box full of burfis, Mithai Indian Sweets London November 2009.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:A_box_full_of_burfis,_Mithai_Indian_Sweets_London_November_2009.jpg",
+    "author": "secretlondon123",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
   }
 ]

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Menu, Phone, ShoppingBag, X } from 'lucide-react'
-import { BUSINESS, NAV_LINKS, PHONE_LINK } from '../config/business.js'
+import { BUSINESS, NAV_LINKS, OFFER, PHONE_LINK } from '../config/business.js'
+import { MAX_DISCOUNT } from '../data/products.js'
 import { Link, useRouter } from '../router.jsx'
 import { buildWhatsAppUrl, GENERAL_MESSAGE } from '../utils/order.js'
 import { WhatsAppIcon } from './Icons.jsx'
@@ -19,7 +20,12 @@ export default function Header({ cartCount, onOpenCart }) {
 
   return (
     <header className="site-header">
-      <div className="notice-strip">{BUSINESS.bulkNotice}</div>
+      <div className="notice-strip">
+        {OFFER.active && MAX_DISCOUNT > 0 && (
+          <span className="notice-strip__offer">✦ {OFFER.name}: up to {MAX_DISCOUNT}% off ✦</span>
+        )}
+        <span>{BUSINESS.bulkNotice}</span>
+      </div>
       <div className="container site-header__bar">
         <Link to="/" className="brand" aria-label={`${BUSINESS.name} — home`}>
           <span className="brand__mark" aria-hidden="true">CB</span>

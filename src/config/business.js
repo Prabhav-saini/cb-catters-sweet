@@ -16,6 +16,17 @@ export const BUSINESS = {
   phoneNumber: '917455845671',
 }
 
+// Smallest order accepted, in kg. Applies to the TOTAL of an order —
+// sweets can be mixed (e.g. 4 kg + 6 kg) to reach it.
+export const MIN_ORDER_KG = 10
+
+// Festive offer. Set active: false after the festival and the site goes
+// back to regular prices everywhere (prices are set in src/data/products.js).
+export const OFFER = {
+  active: true,
+  name: 'Diwali Offer',
+}
+
 export const PHONE_LINK = `tel:+${BUSINESS.phoneNumber}`
 
 // Internal links (handled by the router). "#contact" is the footer, present on every page.

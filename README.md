@@ -15,9 +15,10 @@ A static website for **CB Catters & Sweet**: a home page showcasing 3 categories
 |---|---|
 | WhatsApp | +91 98371 72497 → `https://wa.me/919837172497` |
 | Phone | +91 74558 45671 → `tel:+917455845671` |
-| Cheena Sweets | ₹300/kg (CB-CH-001 … 010) |
-| Desi Ghee Sweets | ₹500/kg (CB-DG-001 … 010) |
-| Kaju Sweets | ₹800/kg (CB-KJ-001 … 010) |
+| Cheena Sweets | ~~₹400~~ **₹300/kg** Diwali offer (CB-CH-001 … 010) |
+| Desi Ghee Sweets | ~~₹600~~ **₹500/kg** Diwali offer (CB-DG-001 … 010) |
+| Kaju Sweets | ~~₹1,200~~ **₹800/kg** Diwali offer (CB-KJ-001 … 010) |
+| Minimum order | **10 kg in total** per order (sweets can be mixed) |
 
 The full product list is in [`PRODUCT_CATALOGUE.md`](PRODUCT_CATALOGUE.md). Photo sources and licences are in [`IMAGE_CREDITS.md`](IMAGE_CREDITS.md).
 
@@ -65,7 +66,10 @@ GitHub Pages project sites (`username.github.io/repo/`) are not supported, becau
 | To change… | Edit this file |
 |---|---|
 | Business name, tagline, phone or WhatsApp number | `src/config/business.js` |
-| A category price (updates every sweet in it) | `src/data/products.js` → `CATEGORIES` → `pricePerKg` |
+| A category price (updates every sweet in it) | `src/data/products.js` → `regularPricePerKg` / `offerPricePerKg` |
+| **End the Diwali offer** (back to regular prices everywhere) | `src/config/business.js` → `OFFER.active: false` |
+| Rename the offer (e.g. "Holi Offer") | `src/config/business.js` → `OFFER.name` |
+| Minimum order quantity | `src/config/business.js` → `MIN_ORDER_KG` |
 | Sweet names or descriptions, or adding a sweet | `src/data/products.js` → `ITEMS` |
 | Category description shown on the home and category pages | `src/data/products.js` → `CATEGORIES` → `description` |
 | FAQ answers | `src/components/Faq.jsx` |
@@ -96,15 +100,20 @@ https://wa.me/919837172497?text=<URL-encoded message>
 
 The message contains the business name, product name, product code, category, quantity, rate and estimated subtotal, in the same format as the brief.
 
+Quantities start at 10 kg. A single sweet ordered on its own must be at least the minimum order (10 kg); smaller amounts can still be added to the bulk order list and combined with other sweets.
+
+While the Diwali offer is on, the message shows the offer rate, the regular rate and the saving, e.g. `Rate: ₹300/kg (Diwali Offer, regular ₹400/kg)` and `Diwali Offer Saving: ₹1,000`.
+
 Quantities are checked before WhatsApp opens. Empty, zero, negative and non-numeric values are rejected with an inline error, as are values with more than 2 decimals or above 10,000 kg.
 
 ### Bulk order list (multi-item)
 **Add to Bulk Order** collects sweets from any category. The list (header bag icon, or *My Order* on mobile) lets the customer:
 - change quantities
 - remove items
-- see each line's subtotal and the estimated total
+- see each line's subtotal, the total kilograms, the Diwali saving and the estimated total
+- see a progress bar towards the 10 kg minimum. Sending is blocked until the total reaches 10 kg
 
-It then sends one combined WhatsApp message with each product's code, name, category, quantity, rate, line subtotal and the grand total. The list is saved in the browser's `localStorage`, so it survives a page reload. The site clearly states that totals are estimates and that pricing, availability, minimum order and delivery are confirmed by the business.
+It then sends one combined WhatsApp message with each product's code, name, category, quantity, rate, line subtotal and the grand total. The list is saved in the browser's `localStorage`, so it survives a page reload. The site clearly states that totals are estimates and that pricing, availability and delivery are confirmed by the business.
 
 ### Click-to-call
 All call buttons use `tel:+917455845671`. They appear in the header, hero, Bulk Orders section, footer, mobile menu and the floating mobile bar.

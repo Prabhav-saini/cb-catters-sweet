@@ -1,8 +1,11 @@
 // ─────────────────────────────────────────────────────────────
 //  Product catalogue
 //
-//  • Prices are set per CATEGORY (pricePerKg below). Change a
-//    category price once and every sweet in it updates.
+//  • Prices are set per CATEGORY. Change a category price once and
+//    every sweet in it updates:
+//      regularPricePerKg – normal price
+//      offerPricePerKg   – festive price, used while OFFER.active is
+//                          true (src/config/business.js)
 //  • Product IDs are permanent. Do not reuse or renumber them —
 //    customers quote them on WhatsApp. Add new items with the
 //    next number (e.g. CB-CH-011).
@@ -11,12 +14,15 @@
 //    See IMAGE_CREDITS.md before removing any photo credit.
 // ─────────────────────────────────────────────────────────────
 
-export const CATEGORIES = [
+import { OFFER } from '../config/business.js'
+
+const CATEGORY_DATA = [
   {
     id: 'cheena-sweets',
     name: 'Cheena Sweets',
     code: 'CH',
-    pricePerKg: 300,
+    regularPricePerKg: 400,
+    offerPricePerKg: 300,
     image: 'images/site/cat-cheena.webp',
     blurb: 'Soft, syrupy classics made from fresh chhena.',
     script: 'Soft, syrupy & fresh',
@@ -27,7 +33,8 @@ export const CATEGORIES = [
     id: 'desi-ghee-sweets',
     name: 'Desi Ghee Sweets',
     code: 'DG',
-    pricePerKg: 500,
+    regularPricePerKg: 600,
+    offerPricePerKg: 500,
     image: 'images/site/cat-desi-ghee.webp',
     blurb: 'Ladoos, barfis, peda and festive classics.',
     script: 'Rich & festive',
@@ -38,7 +45,8 @@ export const CATEGORIES = [
     id: 'kaju-sweets',
     name: 'Kaju Sweets',
     code: 'KJ',
-    pricePerKg: 800,
+    regularPricePerKg: 1200,
+    offerPricePerKg: 800,
     image: 'images/site/cat-kaju.webp',
     blurb: 'Premium cashew sweets — katlis, rolls and more.',
     script: 'Premium cashew classics',
@@ -46,6 +54,20 @@ export const CATEGORIES = [
       'Cashew sweets for gifting and special occasions: Kaju Katli, Kaju Kesar Katli, Kaju Rolls with pista, anjeer, rose or dry-fruit, Kaju Paan and Kaju Apple. All at one wholesale rate per kilogram.',
   },
 ]
+
+// Adds the prices the site actually uses:
+//   pricePerKg        – what the customer pays (offer price while the offer runs)
+//   regularPricePerKg – shown struck through during the offer, else null
+//   discountPercent   – e.g. 25, or 0 when no offer
+export const CATEGORIES = CATEGORY_DATA.map((c) => {
+  const onOffer = OFFER.active && c.offerPricePerKg < c.regularPricePerKg
+  return {
+    ...c,
+    pricePerKg: onOffer ? c.offerPricePerKg : c.regularPricePerKg,
+    regularPricePerKg: onOffer ? c.regularPricePerKg : null,
+    discountPercent: onOffer ? Math.round((1 - c.offerPricePerKg / c.regularPricePerKg) * 100) : 0,
+  }
+})
 
 // [id, name, short description] grouped by category id
 const ITEMS = {
@@ -94,12 +116,16 @@ export const PRODUCTS = CATEGORIES.flatMap((cat) =>
     category: cat.name,
     categoryId: cat.id,
     pricePerKg: cat.pricePerKg,
+    regularPricePerKg: cat.regularPricePerKg,
+    discountPercent: cat.discountPercent,
     image: `images/products/${id}.webp`,
     description,
   })),
 )
 
 export const PRODUCTS_BY_ID = Object.fromEntries(PRODUCTS.map((p) => [p.id, p]))
+
+export const MAX_DISCOUNT = Math.max(...CATEGORIES.map((c) => c.discountPercent))
 
 export const categoryPath = (categoryId) => `/sweets/${categoryId}`
 

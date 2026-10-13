@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { ShoppingBag, Trash2, X } from 'lucide-react'
 import { PRODUCTS_BY_ID } from '../data/products.js'
 import { Link } from '../router.jsx'
-import { buildCartMessage, buildWhatsAppUrl, copyText, formatINR, parseQuantity, subtotal } from '../utils/order.js'
+import { MIN_ORDER_KG, OFFER } from '../config/business.js'
+import { buildCartMessage, buildWhatsAppUrl, copyText, formatINR, formatKg, minOrderError, parseQuantity, savings, subtotal } from '../utils/order.js'
 import { WhatsAppIcon } from './Icons.jsx'
 import QuantityInput from './QuantityInput.jsx'
 import SmartImage from './SmartImage.jsx'
@@ -24,15 +25,19 @@ export default function CartDrawer({ open, onClose, cart, setQuantity, remove, c
     .map(([id, text]) => ({ product: PRODUCTS_BY_ID[id], text, parsed: parseQuantity(text) }))
   const hasInvalid = lines.some((l) => l.parsed.error)
   const valid = lines.filter((l) => l.parsed.value).map((l) => ({ product: l.product, kg: l.parsed.value }))
-  const total = valid.reduce((s, l) => s + subtotal(l.kg, l.product.pricePerKg), 0)
+  const round2 = (n) => Math.round(n * 100) / 100
+  const total = round2(valid.reduce((s, l) => s + subtotal(l.kg, l.product.pricePerKg), 0))
+  const saved = round2(valid.reduce((s, l) => s + savings(l.kg, l.product), 0))
+  const totalKg = round2(valid.reduce((s, l) => s + l.kg, 0))
+  const belowMin = minOrderError(totalKg)
 
-  const canSend = lines.length > 0 && !hasInvalid
+  const canSend = lines.length > 0 && !hasInvalid && !belowMin
   const message = canSend ? buildCartMessage(valid) : ''
 
   const handleSend = (e) => {
     if (!canSend) {
       e.preventDefault()
-      setHint('Please fix the highlighted quantities first.')
+      setHint(hasInvalid ? 'Please fix the highlighted quantities first.' : belowMin)
       return
     }
     setHint('')
@@ -98,15 +103,31 @@ export default function CartDrawer({ open, onClose, cart, setQuantity, remove, c
             </ul>
 
             <footer className="cart__foot">
+              <div className="cart__row">
+                <span>Total quantity</span>
+                <strong className={belowMin ? 'is-short' : undefined}>{formatKg(totalKg)}</strong>
+              </div>
+              <div className="cart__meter" aria-hidden="true">
+                <span style={{ width: `${Math.min(100, (totalKg / MIN_ORDER_KG) * 100)}%` }} />
+              </div>
+              <p className={`cart__min ${belowMin ? 'is-short' : 'is-ok'}`} aria-live="polite">
+                {belowMin ?? `Minimum order of ${formatKg(MIN_ORDER_KG)} reached.`}
+              </p>
+              {saved > 0 && (
+                <div className="cart__row cart__row--save">
+                  <span>{OFFER.name} saving</span>
+                  <strong>−{formatINR(saved)}</strong>
+                </div>
+              )}
               <div className="cart__total">
                 <span>Estimated Total</span>
-                <strong>{formatINR(Math.round(total * 100) / 100)}</strong>
+                <strong>{formatINR(total)}</strong>
               </div>
               <p className="cart__note">
-                Estimate only. Final pricing, availability, minimum order quantity and delivery terms will be
-                confirmed by us on WhatsApp.
+                Estimate only. Minimum order {formatKg(MIN_ORDER_KG)} in total (sweets can be mixed). Final pricing,
+                availability and delivery terms will be confirmed by us on WhatsApp.
               </p>
-              {hint && hasInvalid && <p className="cart__hint" role="alert">{hint}</p>}
+              {hint && (hasInvalid || belowMin) && <p className="cart__hint" role="alert">{hasInvalid ? hint : belowMin}</p>}
               <a
                 className={`btn btn--whatsapp btn--lg btn--block ${canSend ? '' : 'is-disabled'}`}
                 href={canSend ? buildWhatsAppUrl(message) : '#'}

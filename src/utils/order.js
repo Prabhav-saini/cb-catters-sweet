@@ -1,4 +1,4 @@
-import { BUSINESS } from '../config/business.js'
+import { BUSINESS, MIN_ORDER_KG, OFFER } from '../config/business.js'
 
 // ── Money & quantity formatting ──────────────────────────────
 
@@ -31,6 +31,22 @@ export function parseQuantity(raw) {
 /** Avoids floating-point noise like 0.1 * 3 = 0.30000000000000004 */
 export const subtotal = (kg, pricePerKg) => Math.round(kg * pricePerKg * 100) / 100
 
+const round2 = (n) => Math.round(n * 100) / 100
+
+/** Amount saved versus the regular price (0 when no offer). */
+export const savings = (kg, product) =>
+  product.regularPricePerKg ? round2(kg * (product.regularPricePerKg - product.pricePerKg)) : 0
+
+/** Returns a message if the order total is below the minimum, else null. */
+export function minOrderError(totalKg) {
+  if (totalKg >= MIN_ORDER_KG) return null
+  const short = round2(MIN_ORDER_KG - totalKg)
+  return `Minimum order is ${formatKg(MIN_ORDER_KG)} in total. Add ${formatKg(short)} more.`
+}
+
+const rateText = (p) =>
+  `${formatINR(p.pricePerKg)}/kg` + (p.regularPricePerKg ? ` (${OFFER.name}, regular ${formatINR(p.regularPricePerKg)}/kg)` : '')
+
 // ── WhatsApp messages ───────────────────────────────────────
 
 const GREETING = `Hello ${BUSINESS.name},\n\nI would like to enquire about a bulk order.`
@@ -44,8 +60,9 @@ export function buildProductMessage(product, kg) {
     `Product Code: ${product.id}`,
     `Category: ${product.category}`,
     `Quantity: ${formatKg(kg)}`,
-    `Rate: ${formatINR(product.pricePerKg)}/kg`,
+    `Rate: ${rateText(product)}`,
     `Estimated Subtotal: ${formatINR(subtotal(kg, product.pricePerKg))}`,
+    ...(product.regularPricePerKg ? [`${OFFER.name} Saving: ${formatINR(savings(kg, product))}`] : []),
     '',
     SIGN_OFF,
   ].join('\n')
@@ -57,11 +74,13 @@ export function buildCartMessage(lines) {
     [
       `${i + 1}. ${product.name} (${product.id})`,
       `   Category: ${product.category}`,
-      `   ${formatKg(kg)} × ${formatINR(product.pricePerKg)}/kg = ${formatINR(subtotal(kg, product.pricePerKg))}`,
+      `   ${formatKg(kg)} × ${formatINR(product.pricePerKg)}/kg = ${formatINR(subtotal(kg, product.pricePerKg))}` +
+        (product.regularPricePerKg ? ` (regular ${formatINR(product.regularPricePerKg)}/kg)` : ''),
     ].join('\n'),
   )
   const totalKg = lines.reduce((s, l) => s + l.kg, 0)
   const total = lines.reduce((s, l) => s + subtotal(l.kg, l.product.pricePerKg), 0)
+  const saved = lines.reduce((s, l) => s + savings(l.kg, l.product), 0)
   return [
     GREETING,
     '',
@@ -69,6 +88,7 @@ export function buildCartMessage(lines) {
     '',
     `Total Quantity: ${formatKg(Math.round(totalKg * 100) / 100)}`,
     `Estimated Total: ${formatINR(Math.round(total * 100) / 100)}`,
+    ...(saved > 0 ? [`${OFFER.name} Saving: ${formatINR(round2(saved))}`] : []),
     '',
     SIGN_OFF,
   ].join('\n')

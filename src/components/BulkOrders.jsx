@@ -1,12 +1,12 @@
 import { ClipboardList, MessageCircle, PhoneCall, ShoppingBag } from 'lucide-react'
-import { BUSINESS, PHONE_LINK } from '../config/business.js'
+import { BUSINESS, MIN_ORDER_KG, PHONE_LINK } from '../config/business.js'
 import SectionHead from './SectionHead.jsx'
 
 const STEPS = [
   {
     icon: ClipboardList,
     title: 'Pick your sweets',
-    text: 'Browse the three categories and enter the quantity you need in kilograms for each sweet.',
+    text: `Browse the three categories and enter the kilograms you need. The minimum order is ${MIN_ORDER_KG} kg in total, and you can mix sweets.`,
   },
   {
     icon: MessageCircle,
@@ -16,7 +16,7 @@ const STEPS = [
   {
     icon: PhoneCall,
     title: 'We confirm the details',
-    text: 'We reply to confirm availability, final pricing, minimum quantity and delivery before your sweets are prepared.',
+    text: 'We reply to confirm availability, final pricing and delivery before your sweets are prepared.',
   },
 ]
 
@@ -40,7 +40,7 @@ export default function BulkOrders({ cartCount, onOpenCart }) {
         <div className="bulk__cta">
           <p>
             Prices shown are per kilogram and any totals on this site are <strong>estimates</strong>. Final pricing,
-            availability, minimum order quantity and delivery terms are confirmed by {BUSINESS.name}.
+            availability and delivery terms are confirmed by {BUSINESS.name}. Minimum order: {MIN_ORDER_KG} kg in total.
           </p>
           <div className="bulk__buttons">
             <button type="button" className="btn btn--primary" onClick={onOpenCart}>

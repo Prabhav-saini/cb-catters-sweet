@@ -1,7 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { CATEGORIES, categoryPath, productsInCategory } from '../data/products.js'
 import { Link } from '../router.jsx'
-import { formatINR } from '../utils/order.js'
+import Price, { OfferTag } from './Price.jsx'
 import SectionHead from './SectionHead.jsx'
 import SmartImage from './SmartImage.jsx'
 
@@ -31,15 +31,16 @@ export default function Categories() {
                     <SmartImage src={cat.image} alt="" width={768} height={960} />
                   </div>
                   <span className="showcase-row__count">{items.length} sweets</span>
+                  {cat.discountPercent > 0 && <span className="showcase-row__off">{cat.discountPercent}%<small>OFF</small></span>}
                 </Link>
 
                 <div className="showcase-row__body">
                   <p className="script">{cat.script}</p>
+                  {cat.discountPercent > 0 && <OfferTag />}
                   <h3 id={`${cat.id}-heading`}>{cat.name}</h3>
-                  <p className="showcase-row__price">
-                    {formatINR(cat.pricePerKg)}
-                    <span>per kg</span>
-                  </p>
+                  <div className="showcase-row__price">
+                    <Price item={cat} size="xl" />
+                  </div>
                   <p className="showcase-row__desc">{cat.description}</p>
 
                   <ul className="showcase-row__thumbs" aria-label={`A few ${cat.name}`}>

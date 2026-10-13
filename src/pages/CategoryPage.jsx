@@ -1,5 +1,5 @@
 import { ArrowRight, ChevronRight, Phone, ShoppingBag } from 'lucide-react'
-import { BUSINESS, PHONE_LINK } from '../config/business.js'
+import { BUSINESS, MIN_ORDER_KG, OFFER, PHONE_LINK } from '../config/business.js'
 import { CATEGORIES, categoryPath, productsInCategory } from '../data/products.js'
 import { Link } from '../router.jsx'
 import { buildWhatsAppUrl, formatINR } from '../utils/order.js'
@@ -8,6 +8,7 @@ import { WhatsAppIcon } from '../components/Icons.jsx'
 import ProductCard from '../components/ProductCard.jsx'
 import SectionHead from '../components/SectionHead.jsx'
 import SmartImage from '../components/SmartImage.jsx'
+import Price, { OfferTag } from '../components/Price.jsx'
 
 export default function CategoryPage({ category, onAddToOrder, notify, cartCount, onOpenCart }) {
   const index = CATEGORIES.indexOf(category)
@@ -15,7 +16,8 @@ export default function CategoryPage({ category, onAddToOrder, notify, cartCount
   const others = CATEGORIES.filter((c) => c.id !== category.id)
   usePageMeta(`${category.name} — ${formatINR(category.pricePerKg)}/kg`, `${category.description} Wholesale & bulk orders only.`)
 
-  const enquiry = `Hello ${BUSINESS.name},\n\nI would like to enquire about a bulk order of ${category.name} (${formatINR(category.pricePerKg)}/kg).\n\nPlease share availability and order details.`
+  const rate = `${formatINR(category.pricePerKg)}/kg` + (category.regularPricePerKg ? `, ${OFFER.name}` : '')
+  const enquiry = `Hello ${BUSINESS.name},\n\nI would like to enquire about a bulk order of ${category.name} (${rate}).\n\nPlease share availability and order details.`
 
   return (
     <>
@@ -32,11 +34,12 @@ export default function CategoryPage({ category, onAddToOrder, notify, cartCount
           <div className="cat-hero__grid">
             <div>
               <p className="script">{category.script}</p>
+              {category.discountPercent > 0 && <OfferTag className="offer-tag--lg">{OFFER.name} · {category.discountPercent}% off</OfferTag>}
               <h1 id="cat-title">{category.name}</h1>
-              <p className="cat-hero__price">
-                {formatINR(category.pricePerKg)}
-                <span>per kg · {products.length} sweets</span>
-              </p>
+              <div className="cat-hero__price">
+                <Price item={category} size="xl" showOff={false} />
+              </div>
+              <p className="cat-hero__meta">{products.length} sweets · Min. order {MIN_ORDER_KG} kg in total (mix any sweets)</p>
               <p className="cat-hero__desc">{category.description}</p>
               <p className="badge badge--bulk">{BUSINESS.bulkNotice}</p>
               <div className="cat-hero__ctas">
@@ -82,8 +85,8 @@ export default function CategoryPage({ category, onAddToOrder, notify, cartCount
           <div className="bulk__cta cat-products__cta">
             <p>
               <strong>Ordering several sweets?</strong> Add them to your bulk order from any category and send one
-              combined WhatsApp enquiry. Totals are estimates. Final pricing, availability, minimum quantity and
-              delivery are confirmed by us.
+              combined WhatsApp enquiry. Minimum order is {MIN_ORDER_KG} kg in total. Totals are estimates; final
+              pricing, availability and delivery are confirmed by us.
             </p>
             <div className="bulk__buttons">
               <button type="button" className="btn btn--primary" onClick={onOpenCart}>
@@ -107,7 +110,7 @@ export default function CategoryPage({ category, onAddToOrder, notify, cartCount
                 </div>
                 <div>
                   <h3>{c.name}</h3>
-                  <p className="other-cat__price">{formatINR(c.pricePerKg)}<span>/kg</span></p>
+                  <p className="other-cat__price"><Price item={c} size="sm" /></p>
                   <p className="muted">{c.blurb}</p>
                   <span className="other-cat__go">
                     View {productsInCategory(c.id).length} sweets <ArrowRight size={16} aria-hidden="true" />
